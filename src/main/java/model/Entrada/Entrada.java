@@ -16,16 +16,14 @@ public class Entrada {
 
     private Float precio;
 
+   // private DescuentoMayor descuentoMayor = new DescuentoMayor();
+
+   // private DescuentoMedio descuentoMedio = new DescuentoMedio();
+
+   // private DescuentoMenor descuentoMenor = new DescuentoMenor();
 
 
-    private DescuentoMayor descuentoMayor = new DescuentoMayor();
-
-    private DescuentoMedio descuentoMedio = new DescuentoMedio();
-
-    private DescuentoMenor descuentoMenor = new DescuentoMenor();
-
-
-  /*  public Void verificarDescuento(){
+   /*public Void verificarDescuento(){
 
         if(descuentoMayor.calcularDescuento(this)){
             this.
