@@ -6,10 +6,10 @@ public class Pelicula extends Evento{
 
     private int calificacion;
     private String productora;
-    private ArrayList<String> elenco;
+    private ArrayList<Actor> elenco;
     private int minutosPelicula;
 
-    public Pelicula(int calificacion, String productora, ArrayList<String> elenco, int minutosPelicula) {
+    public Pelicula(int calificacion, String productora, ArrayList<Actor> elenco, int minutosPelicula) {
         super(calificacion);
         this.productora = productora;
         this.elenco = elenco;
@@ -24,11 +24,11 @@ public class Pelicula extends Evento{
         this.minutosPelicula = minutosPelicula;
     }
 
-    public ArrayList<String> getElenco() {
+    public ArrayList<Actor> getElenco() {
         return elenco;
     }
 
-    public void setElenco(ArrayList<String> elenco) {
+    public void setElenco(ArrayList<Actor> elenco) {
         this.elenco = elenco;
     }
 
@@ -62,6 +62,12 @@ public class Pelicula extends Evento{
     }
 
     public boolean tieneActoreEstrella(){
-        return this.getElenco().contains("Dwayne Johnson") || this.getElenco().contains("Vin Diesel") ;
+        for(int x=0; x<elenco.size();x++){
+            Actor actor = elenco.get(x);
+            if(actor.getNombre().contains("Dwayne Johnson") || actor.getNombre().contains("Vin Diesel")){
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -10,13 +10,13 @@ public class Seleccion {
 
     private Integer mundialesGanado;
 
-    private ArrayList<String> jugadoresTitulares;
+    private ArrayList<Jugador> jugadoresTitulares;
 
     public String getNombrePais() {
         return nombrePais;
     }
 
-    public Seleccion(String nombrePais, String continente, Integer mundialesGanado, ArrayList<String> jugadoresTitulares) {
+    public Seleccion(String nombrePais, String continente, Integer mundialesGanado, ArrayList<Jugador> jugadoresTitulares) {
         this.nombrePais = nombrePais;
         this.continente = continente;
         this.mundialesGanado = mundialesGanado;
@@ -35,11 +35,11 @@ public class Seleccion {
         this.continente = continente;
     }
 
-    public ArrayList<String> getJugadoresTitulares() {
+    public ArrayList<Jugador> getJugadoresTitulares() {
         return jugadoresTitulares;
     }
 
-    public void setJugadoresTitulares(ArrayList<String> jugadoresTitulares) {
+    public void setJugadoresTitulares(ArrayList<Jugador> jugadoresTitulares) {
         this.jugadoresTitulares = jugadoresTitulares;
     }
 
@@ -52,7 +52,13 @@ public class Seleccion {
     }
 
     public boolean contieneJugadorEstrella(){
-        return this.getJugadoresTitulares().contains("Lionel Messi");
+        for(int x=0; x<jugadoresTitulares.size();x++){
+            Jugador jugador = jugadoresTitulares.get(x);
+            if(jugador.getNombre().contains("Lionel Messi")){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean esMuyCampeon(){
