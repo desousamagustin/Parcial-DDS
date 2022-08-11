@@ -1,3 +1,5 @@
+import model.Avatar.Humano;
+import model.Avatar.PrototypeAvatar;
 import model.Usuario.Cuenta;
 import model.Usuario.Usuario;
 import org.springframework.boot.SpringApplication;
@@ -44,13 +46,17 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-
                     break;
                 case 2:
                     break;
                 case 3:
                     break;
                 case 4:
+                    Humano nuevoAvatar = new Humano();
+                    nuevoAvatar.solicitarDatos();
+                    usuario.setAvatar(nuevoAvatar);
+                    usuario.mostrarAvatar();
+                    // Falta persistir el avatar ahora
                     break;
                 case 5:
                     break;

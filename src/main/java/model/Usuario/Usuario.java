@@ -1,6 +1,7 @@
 package model.Usuario;
 
 import model.Avatar.PrototypeAvatar;
+import model.Entrada.Entrada;
 import model.Entrada.Reserva;
 import model.MetodoDePago.StrategyMetodoDePago;
 
@@ -100,5 +101,16 @@ public class Usuario {
         this.reservas = null;
         this.avatar = null;
         this.metodoDePago = null;
+    }
+
+    public void mostrarAvatar() {
+        this.getAvatar().getColorOjos();
+        this.getAvatar().getColorPelo();
+        this.getAvatar().getCamisetaSeleccion();
+        this.getAvatar().getApodoCamiseta();
+    }
+
+    public void comprarEntradas() {
+        Entrada nuevaEntrada = new Entrada();
     }
 }
