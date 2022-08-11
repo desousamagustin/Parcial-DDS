@@ -1,4 +1,4 @@
-package Combo;
+package model.Combo;
 
 public class Producto {
 }

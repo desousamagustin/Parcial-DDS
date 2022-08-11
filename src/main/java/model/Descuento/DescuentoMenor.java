@@ -1,4 +1,4 @@
-package Descuento;
+package model.Descuento;
 
 public class DescuentoMenor {
 }

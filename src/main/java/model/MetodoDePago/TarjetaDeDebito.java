@@ -1,4 +1,4 @@
-package MetodoDePago;
+package model.MetodoDePago;
 
 public class TarjetaDeDebito {
 }

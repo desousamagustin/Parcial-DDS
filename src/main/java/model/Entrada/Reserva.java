@@ -1,4 +1,4 @@
-package Entrada;
+package model.Entrada;
 
 public class Reserva {
 }
