@@ -1,4 +1,4 @@
-package Usuario;
+package model.Usuario;
 
 public class Persona {
 }
