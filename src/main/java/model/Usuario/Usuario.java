@@ -3,7 +3,6 @@ package model.Usuario;
 import model.Avatar.PrototypeAvatar;
 import model.Entrada.Entrada;
 import model.Entrada.Reserva;
-import model.MetodoDePago.StrategyMetodoDePago;
 
 import java.util.List;
 import java.util.Scanner;
