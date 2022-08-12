@@ -41,7 +41,7 @@ public class APICotizacion {
 
                 try {
                     HttpEntity entity = response.getEntity();
-                    if (entity != null && response.getStatusLine().getStatusCode() == 200) { // Debo validar que el codigo sea 200, sino hay algun problema con la API
+                    if (entity != null && response.getStatusLine().getStatusCode() == 200) { // validar si es 200, por si la API no funciona
                         String result = EntityUtils.toString(entity);
 
                         JSONObject obj = new JSONObject(result);
