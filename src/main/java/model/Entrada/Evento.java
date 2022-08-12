@@ -7,6 +7,21 @@ import java.time.LocalDate;
 public abstract class Evento {
     private int calificacion;
 
+    private double precio;
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
+    public Evento(int calificacion, double precio) {
+        this.calificacion = calificacion;
+        this.precio = precio;
+    }
+
     public Evento(int calificacion) {
         this.calificacion = calificacion;
     }

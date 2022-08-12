@@ -110,6 +110,10 @@ public class Usuario {
         this.getAvatar().getApodoCamiseta();
     }
 
+    public boolean esMayorDeEdad(){
+        return datosPersonales.getEdad() >=18;
+    }
+
     public void comprarEntradas() {
         Entrada nuevaEntrada = new Entrada();
     }

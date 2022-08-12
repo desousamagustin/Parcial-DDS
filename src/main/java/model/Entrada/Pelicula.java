@@ -9,6 +9,14 @@ public class Pelicula extends Evento{
     private ArrayList<Actor> elenco;
     private int minutosPelicula;
 
+    public Pelicula(int calificacion, int calificacion1, String productora, ArrayList<Actor> elenco, int minutosPelicula, double precio) {
+        super(calificacion,precio);
+        this.calificacion = calificacion1;
+        this.productora = productora;
+        this.elenco = elenco;
+        this.minutosPelicula = minutosPelicula;
+    }
+
     public Pelicula(int calificacion, String productora, ArrayList<Actor> elenco, int minutosPelicula) {
         super(calificacion);
         this.productora = productora;
