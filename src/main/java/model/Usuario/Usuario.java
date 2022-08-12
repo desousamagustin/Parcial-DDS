@@ -3,6 +3,7 @@ package model.Usuario;
 import model.Avatar.PrototypeAvatar;
 import model.Entrada.Entrada;
 import model.Entrada.Reserva;
+import model.MetodoDePago.MetodoDePago;
 
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +14,7 @@ public class Usuario {
     private String nombreUsuario;
     private PrototypeAvatar avatar;
     private List <Reserva> reservas;
-    private StrategyMetodoDePago metodoDePago;
+    private MetodoDePago metodoDePago;
     private Cuenta cuentaPersonal;
 
 
@@ -48,11 +49,11 @@ public class Usuario {
         this.reservas = reservas;
     }
 
-    public StrategyMetodoDePago getMetodoDePago() {
+    public MetodoDePago getMetodoDePago() {
         return metodoDePago;
     }
 
-    public void setMetodoDePago(StrategyMetodoDePago metodoDePago) {
+    public void setMetodoDePago(MetodoDePago metodoDePago) {
         this.metodoDePago = metodoDePago;
     }
 
