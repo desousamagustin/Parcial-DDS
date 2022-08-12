@@ -14,11 +14,12 @@ public class Reserva {
 
     private double costoTotal;
 
-    public double calcularCostoTotal(){
+    public float calcularCostoTotal(){
         for(int x=0; x<entradas.size();x++){
             //Actor actor = elenco.get(x);
             Entrada entrada=entradas.get(x);
-            this.costoTotal= this.costoTotal + entrada.getPrecio(); // esta bien esa suma??
+            this.costoTotal = Double.sum(this.getCostoTotal(),entrada.costo());
+            this.costoTotal += entrada.costo(); // esta bien esa suma??
         }
         return 0;
     }
@@ -63,7 +64,7 @@ public class Reserva {
         return costoTotal;
     }
 
-    public void setCostoTotal(double costoTotal) {
+    public void setCostoTotal(float costoTotal) {
         this.costoTotal = costoTotal;
     }
 }

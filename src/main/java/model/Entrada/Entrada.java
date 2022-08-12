@@ -23,14 +23,14 @@ public class Entrada {
     //Ese descuento siempre se da entonces se empieza por el...
     private DescuentoMenor descuento;
 
-    public Void verificarDescuento(){
+   /* public Void verificarDescuento(){
         this.descuento.calcularDescuento(this,this.usuario,this.evento);
         this.costo();
         return null;
-    }
+    }*/
 
-    public void costo() {
-        this.setPrecio(this.getPrecio() - this.getDescuentoOtorgado());
+    public double costo() {
+       return this.setPrecio(this.getPrecio() - this.getDescuentoOtorgado());
     }
 
     public double getDescuentoOtorgado() {
