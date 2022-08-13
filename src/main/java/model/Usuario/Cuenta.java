@@ -2,92 +2,91 @@ package model.Usuario;
 
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
+import javax.persistence.*;
 import java.util.Scanner;
 
+@Entity
+@Table(name = "cuenta")
 public class Cuenta {
+    @Column(name = "id_cuenta")
+    @Id
     private int idCuenta;
-    private String fechaCreacion;
+    @Column
     private String email;
+    @Column
     private String contrasenia;
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    private Usuario usuario;
+    @Column(name = "fecha_de_creacion")
+    private String fechaDeCreacion;
 
 
-    public int getIdCuenta() {
+    public int getId_cuenta() {
         return idCuenta;
     }
 
-    public void setIdCuenta(int idCuenta) {
-        this.idCuenta = idCuenta;
+    public void setId_cuenta(int id_cuenta) {
+        this.idCuenta = id_cuenta;
     }
 
-    public String getFechaCreacion() {
-        return fechaCreacion;
+    public String getFechaDeCreacion() {
+        return fechaDeCreacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFechaDeCreacion(String fechaDeCreacion) {
+        this.fechaDeCreacion = fechaDeCreacion;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
 
     private void solicitarEmailYContrasenia() {
-        Scanner emailIngresado = new Scanner(System.in);
-        Scanner contraseniaIngresada = new Scanner(System.in);
+        Scanner cadena = new Scanner(System.in);
 
-        System.out.println("Ingrese su e-mail ");
-        System.out.print("E-mail: ");
-        email = emailIngresado.nextLine();
-        System.out.println("Ingrese su contrasenia");
-        System.out.print("Contrasenia: ");
-        contrasenia = contraseniaIngresada.nextLine();
+        System.out.print("Ingrese su e-mail: ");
+        email = cadena.nextLine();
+        System.out.print("Ingrese su contrasenia: ");
+        contrasenia = cadena.nextLine();
+        System.out.print("Ingrese fecha de creacion: ");
+        fechaDeCreacion = cadena.nextLine(); // Esto no debe pedirse por parametro. Tiene que ser automatico
     }
 
-    private Boolean existeCuenta() { // acá tiene que ir a verificar a la base de datos que exista la cuenta
-        return true;
-    }
-
-    public void iniciarSesion(Usuario unUsuario,Boolean sePudoIniciarSesion) {
-
+    public void iniciarSesion(Usuario unUsuario) {
         this.solicitarEmailYContrasenia();
 
-        if(this.existeCuenta()) {
-            unUsuario.completarCampos(this);
-            sePudoIniciarSesion = true;
-        } else {
-            System.out.println("E-mail y/o contrasenia incorrectos");
-        }
-    }
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("db");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        Cuenta cuentaBuscada = (Cuenta) entityManager.createQuery("FROM Cuenta WHERE email = 'agus.desousa99@gmail.com' AND contrasenia = '123456789'").getSingleResult();
+        entityManager.getTransaction().commit();
 
-    public void completarConDatosDeBBDD() {
+        /*
+        if(cuentaBuscada.getId_cuenta() != 0) {
+            Usuario usuarioBuscado = (Usuario) entityManager.createQuery("FROM Usuario WHERE id_cuenta = 1");
+            entityManager.getTransaction().commit();
+            System.out.println("Usuario encontrado");
+        } else
+            System.out.println("Usuario no encontrado");*/
 
+        entityManager.close();
+        entityManagerFactory.close();
     }
 
     public void registrarse(Usuario nuevoUsuario) {
         this.solicitarEmailYContrasenia();
+        int entrada;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Id para cuenta: ");
+        entrada = scanner.nextInt();
+        this.idCuenta = entrada;
         nuevoUsuario.solicitarDatos();
-        // this.registrarEnBBDD();
+        nuevoUsuario.setCuentaPersonal(this);
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("db");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.getTransaction().begin();
+
+        entityManager.persist(nuevoUsuario);
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+        entityManagerFactory.close();
     }
 }

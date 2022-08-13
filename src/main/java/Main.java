@@ -1,19 +1,18 @@
-import model.Avatar.Humano;
-import model.Avatar.PrototypeAvatar;
 import model.Usuario.Cuenta;
 import model.Usuario.Usuario;
-import org.springframework.boot.SpringApplication;
+import model.apiCotizacion.Cotizacion;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // SpringApplication.run(Main.class, args);
 
         int opcion;
         Scanner opcionElegida = new Scanner(System.in);
-        Boolean sesionActiva = false;
         Usuario usuario = new Usuario();
+        Cuenta cuenta = new Cuenta();
 
         do {
             System.out.println("1. Iniciar sesion");
@@ -21,14 +20,13 @@ public class Main {
 
             System.out.print("Opcion: ");
             opcion = opcionElegida.nextInt();
-            Cuenta nuevaCuenta = new Cuenta();
 
             if(opcion == 1) {
-                nuevaCuenta.iniciarSesion(usuario,sesionActiva);
+                cuenta.iniciarSesion(usuario);
             } else
-                nuevaCuenta.registrarse(usuario);
+                cuenta.registrarse(usuario);
 
-        } while(opcion != 1 || !sesionActiva);
+        } while(opcion != 1);
 
         System.out.println("Bienvenido al sistema para reserva de entradas para el cine. Por favor, elija una de las siguientes opciones: ");
 
@@ -39,29 +37,31 @@ public class Main {
             System.out.println("3. Ver descuentos disponibles");
             System.out.println("4. Generar un avatar personalizado");
             System.out.println("5. Comprar un combo");
-            System.out.println("6. Consultar cotizacion del dolar");
+            System.out.println("6. Consultar cotizacion del dolar blue");
 
             System.out.print("Opcion: ");
             opcion = opcionElegida.nextInt();
 
             switch (opcion) {
                 case 1:
+                    usuario.comprarEntradas();
                     break;
                 case 2:
+                    usuario.buscarEvento();
                     break;
                 case 3:
+                    usuario.descuentosDisponibles();
                     break;
                 case 4:
-                    Humano nuevoAvatar = new Humano();
-                    nuevoAvatar.solicitarDatos();
-                    usuario.setAvatar(nuevoAvatar);
-                    usuario.mostrarAvatar();
-                    // Falta persistir el avatar ahora
+                    usuario.generarAvatar();
                     break;
                 case 5:
+                    usuario.comprarProducto();
                     break;
                 case 6:
-                    break;
+                    Cotizacion cotizacion = new Cotizacion();
+                    String resultado = cotizacion.obtenerCotizacion().toString();
+                    System.out.println(resultado);
                 default:
                     break;
             }

@@ -5,6 +5,8 @@ public class Partido extends  Evento{
     private final Seleccion seleccionUno;
     private final Seleccion seleccionDos;
 
+    private String nombreEquipos;
+
     public Partido(int calificacion, double precio, Seleccion seleccionUno, Seleccion seleccionDos) {
         super(calificacion, precio);
         this.seleccionUno = seleccionUno;

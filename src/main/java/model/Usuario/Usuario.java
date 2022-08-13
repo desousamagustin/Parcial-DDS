@@ -1,72 +1,112 @@
 package model.Usuario;
 
+import model.Avatar.Humano;
 import model.Avatar.PrototypeAvatar;
-import model.Entrada.Entrada;
-import model.Entrada.Reserva;
+import model.Combo.BaldePochoclo;
+import model.Combo.Bebida;
+import model.Combo.Combo;
+import model.Combo.Producto;
+import model.Descuento.Descuento;
+import model.Descuento.DescuentoMayor;
+import model.Descuento.DescuentoMedio;
+import model.Descuento.DescuentoMenor;
+import model.Entrada.*;
 import model.MetodoDePago.MetodoDePago;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Scanner;
 
+@Entity
+@Table(name = "usuario")
 public class Usuario {
-    private Persona datosPersonales = new Persona();
-    private int idUsuario;
+    @Id
+    @Column(name = "id_usuario")
+    private int id_usuario;
+    @Column
+    private String nombre;
+    @Column
+    private String apellido;
+    @Column
+    private String dni;
+    @Column
+    private int edad;
+    @Column(name = "nombre_usuario")
     private String nombreUsuario;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_cuenta")
+    private Cuenta cuentaAsociada;
+    @Transient
     private PrototypeAvatar avatar;
+    @Transient
     private List <Reserva> reservas;
+    @Transient
     private MetodoDePago metodoDePago;
-    private Cuenta cuentaPersonal;
+    @Transient
+    private List <Producto> productos;
 
-
-    public Persona getDatosPersonales() {
-        return datosPersonales;
+    public int getId_usuario() {
+        return id_usuario;
     }
 
-    public String getNombreUsuario() { return nombreUsuario; }
-
-    public void setNombreUsuario(String nombreUsuario) { this.nombreUsuario = nombreUsuario; }
-    public int getIdUsuario() {
-        return idUsuario;
+    public void setId_usuario(int id_usuario) {
+        this.id_usuario = id_usuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public Cuenta getCuentaAsociada() {
+        return cuentaAsociada;
     }
 
-    public PrototypeAvatar getAvatar() {
-        return avatar;
+    public void setCuentaAsociada(Cuenta cuentaAsociada) {
+        this.cuentaAsociada = cuentaAsociada;
     }
 
-    public void setAvatar(PrototypeAvatar avatar) {
-        this.avatar = avatar;
+    public String getNombre() {
+        return nombre;
     }
 
-    public List<Reserva> getReservas() {
-        return reservas;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
+    public String getApellido() {
+        return apellido;
     }
 
-    public MetodoDePago getMetodoDePago() {
-        return metodoDePago;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    public void setMetodoDePago(MetodoDePago metodoDePago) {
-        this.metodoDePago = metodoDePago;
+    public String getDni() {
+        return dni;
     }
 
-    public void completarCampos(Cuenta unaCuenta) { // Acá se tiene que ir a la base de datos a buscar al usuario asociado a esa cuenta y agregar valores
-        unaCuenta.completarConDatosDeBBDD(); // Creo que seria la query INSERT
-
-        this.datosPersonales = unaCuenta.getUsuario().getDatosPersonales();
-        this.idUsuario = unaCuenta.getUsuario().idUsuario;
-        this.cuentaPersonal = unaCuenta;
-        this.avatar = unaCuenta.getUsuario().avatar;
-        this.reservas = unaCuenta.getUsuario().reservas;
-        this.metodoDePago = unaCuenta.getUsuario().getMetodoDePago();
+    public void setDni(String dni) {
+        this.dni = dni;
     }
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public void setCuentaPersonal(Cuenta nuevaCuenta) {
+        this.cuentaAsociada = nuevaCuenta;
+    }
+
+
+
 
     public void solicitarDatos() {
         String cadena;
@@ -76,42 +116,102 @@ public class Usuario {
 
         System.out.print("Nombre: ");
         cadena = stringIngresado.nextLine();
-        datosPersonales.setNombre(cadena);
+        this.setNombre(cadena);
 
         System.out.print("Apellido: ");
         cadena = stringIngresado.nextLine();
-        datosPersonales.setApellido(cadena);
+        this.setApellido(cadena);
 
         System.out.print("DNI: ");
         cadena = stringIngresado.nextLine();
-        datosPersonales.setDni(cadena);
+        this.setDni(cadena);
 
         System.out.print("Edad: ");
         entero = enteroIngresado.nextInt();
-        this.datosPersonales.setEdad(entero);
-
-        System.out.println("Id Usuario: ");
-        entero = enteroIngresado.nextInt();
-        this.setIdUsuario(entero);
+        this.setEdad(entero);
 
         System.out.print("Nombre de usuario: ");
         cadena = stringIngresado.nextLine();
         this.setNombreUsuario(cadena);
 
-        this.reservas = null;
-        this.avatar = null;
-        this.metodoDePago = null;
+        System.out.println("Id: ");
+        entero = enteroIngresado.nextInt();
+        this.setId_usuario(entero);
+
+        //this.reservas = null;
+        // this.avatar = null;
+        //this.metodoDePago = null;
     }
 
-    public void mostrarAvatar() {
-        this.getAvatar().getColorOjos();
-        this.getAvatar().getColorPelo();
-        this.getAvatar().getCamisetaSeleccion();
-        this.getAvatar().getApodoCamiseta();
+    public void mostrarAvatar() { }
+
+    public void buscarEvento() { }
+
+    public void descuentosDisponibles() {
+        Descuento descuento = new Descuento();
+        descuento.setEstrategia(new DescuentoMenor());
+
+        Entrada entrada = new Entrada();
+        String eleccion;
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Ingrese el tipo de evento al que quiere asistir (Pelicula | Partido): ");
+        eleccion = scanner.nextLine();
+
+        if(eleccion == "Pelicula") {
+            //Pelicula pelicula = new Pelicula(); // no me deja crear un constructor pelado
+            System.out.print("Nombre de la pelicula: ");
+            eleccion = scanner.nextLine();
+            // pelicula = pelicula.buscarEnBBDD(); evento que busca esa pelicula en la base de datos
+            //entrada.setEvento(pelicula);
+        } else if(eleccion == "Partido") {
+            //Partido partido = new Partido(); // no me deja crear un constructor pelado
+
+            System.out.print("Equipos que disputan el partido (ejemplo: Argentina - Alemania): ");
+            eleccion = scanner.nextLine();
+            // partido = partido.buscarEnBBDD(); evento que busca ese partido en la base de datos
+            //entrada.setEvento(partido);
+        } else {
+            System.out.println("El evento ingresado no existe");
+            return;
+        }
+
+        descuento.determinarDescuento(entrada,this);
+        descuento.setEstrategia(new DescuentoMedio());
+        descuento.determinarDescuento(entrada,this);
+        descuento.setEstrategia(new DescuentoMayor());
+        descuento.determinarDescuento(entrada,this);
+    }
+
+    public void generarAvatar() { }
+
+    public void comprarProducto() {
+        int opcion;
+        Scanner scanner = new Scanner(System.in);
+
+        do {
+            System.out.println("0. Cancelar");
+            System.out.println("1. Comprar un balde de pochoclos");
+            System.out.println("2. Comprar una bebida");
+            System.out.println("3. Comprar un balde de pochoclos y una bebida");
+            opcion = scanner.nextInt();
+
+            switch(opcion) {
+                case 1:
+                    Producto baldeDePochoclos = new BaldePochoclo();
+                    break;
+                case 2:
+                    Producto bebida = new Bebida();
+                    break;
+                case 3:
+                    Producto combo = new Combo();
+            }
+
+        } while(opcion != 0);
     }
 
     public boolean esMayorDeEdad(){
-        return datosPersonales.getEdad() >=18;
+        return this.getEdad() >=18;
     }
 
     public void comprarEntradas() {

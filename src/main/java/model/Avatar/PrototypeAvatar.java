@@ -5,6 +5,11 @@ import model.Usuario.Usuario;
 import java.util.Scanner;
 
 public abstract class PrototypeAvatar {
+    protected int numeroCamiseta;
+    protected String apodoCamiseta;
+    protected int id;
+    protected String ColorPelo;
+    protected String colorOjos;
     protected String camisetaSeleccion;
 
     public String getCamisetaSeleccion() {
@@ -54,12 +59,6 @@ public abstract class PrototypeAvatar {
     public void setColorOjos(String colorOjos) {
         this.colorOjos = colorOjos;
     }
-
-    protected int numeroCamiseta;
-    protected String apodoCamiseta;
-    protected int id;
-    protected String ColorPelo;
-    protected String colorOjos;
 
     public abstract void solicitarDatos();
 }

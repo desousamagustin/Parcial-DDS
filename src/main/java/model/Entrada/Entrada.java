@@ -22,11 +22,11 @@ public class Entrada {
 
     //Ese descuento siempre se da entonces se empieza por el...
     private DescuentoMenor descuento;
-
+    /*
     public Void verificarDescuento(){
         this.descuento.calcularDescuento(this,this.usuario,this.evento);
         return null;
-    }
+    }*/
 
     //Aca cuando vengo de consultar por mi descuento, agarro mi descuento calculado y hago el costo real de la entrada
     public double costo() {

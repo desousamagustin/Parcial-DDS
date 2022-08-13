@@ -2,8 +2,7 @@ package model.Entrada;
 
 import java.util.ArrayList;
 
-public class Pelicula extends Evento{
-
+public class Pelicula extends Evento {
     private int calificacion;
     private String productora;
     private ArrayList<Actor> elenco;

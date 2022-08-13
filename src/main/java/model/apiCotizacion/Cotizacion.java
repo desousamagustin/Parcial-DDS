@@ -55,8 +55,8 @@ public class Cotizacion {
     }
 
     public String toString(){
-        return "Cotizacion dolar blue\n\n" + "Fecha: "+this.fecha+"\nDolar venta: "+this.venta
-                +"\tDolar compra: "+this.compra +"\n\n"+" el valor del DOLAR en la cual debes tomar para CONVERSION es: "+this.compra;
+        return "Cotizacion Dolar Blue\n\n" + "Fecha: "+this.fecha+"\nDolar venta: "+this.venta+"\n"
+                +"Dolar compra: "+this.compra +"\n\n"+"El valor del dolar que debes usar como referencia es: "+this.compra+"\n";
     }
 
     public Cotizacion obtenerCotizacion() throws IOException {

@@ -3,7 +3,6 @@ package model.Entrada;
 import java.util.ArrayList;
 
 public class Reserva {
-
     private int numeroReserva;
 
     private int numeroOperacion;
