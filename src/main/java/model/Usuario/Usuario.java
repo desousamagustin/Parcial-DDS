@@ -21,8 +21,12 @@ import java.util.Scanner;
 @Table(name = "usuario")
 public class Usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_usuario")
-    private int id_usuario;
+    private int idUsuario;
+    @Column(name = "nombre_usuario")
+    private String nombreUsuario;
+
     @Column
     private String nombre;
     @Column
@@ -31,8 +35,6 @@ public class Usuario {
     private String dni;
     @Column
     private int edad;
-    @Column(name = "nombre_usuario")
-    private String nombreUsuario;
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_cuenta")
     private Cuenta cuentaAsociada;
@@ -45,12 +47,13 @@ public class Usuario {
     @Transient
     private List <Producto> productos;
 
+    // Getters y Setters
     public int getId_usuario() {
-        return id_usuario;
+        return idUsuario;
     }
 
     public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+        this.idUsuario = id_usuario;
     }
 
     public Cuenta getCuentaAsociada() {
@@ -105,9 +108,7 @@ public class Usuario {
         this.cuentaAsociada = nuevaCuenta;
     }
 
-
-
-
+    // Métodos principales
     public void solicitarDatos() {
         String cadena;
         Scanner stringIngresado = new Scanner(System.in);
@@ -133,10 +134,6 @@ public class Usuario {
         System.out.print("Nombre de usuario: ");
         cadena = stringIngresado.nextLine();
         this.setNombreUsuario(cadena);
-
-        System.out.println("Id: ");
-        entero = enteroIngresado.nextInt();
-        this.setId_usuario(entero);
 
         //this.reservas = null;
         // this.avatar = null;

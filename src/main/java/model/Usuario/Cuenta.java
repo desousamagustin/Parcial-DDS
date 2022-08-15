@@ -8,15 +8,20 @@ import java.util.Scanner;
 @Entity
 @Table(name = "cuenta")
 public class Cuenta {
-    @Column(name = "id_cuenta")
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idCuenta;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuarioAsociado;
     @Column
     private String email;
-    @Column
+    @Column(name = "password")
     private String contrasenia;
     @Column(name = "fecha_de_creacion")
     private String fechaDeCreacion;
+    @Transient
+    private Boolean sesionIniciada = false;
 
 
     public int getId_cuenta() {
@@ -35,6 +40,10 @@ public class Cuenta {
         this.fechaDeCreacion = fechaDeCreacion;
     }
 
+    public Boolean sesionIniciadaCorrectamente() {
+        return sesionIniciada;
+    }
+
 
     private void solicitarEmailYContrasenia() {
         Scanner cadena = new Scanner(System.in);
@@ -46,23 +55,25 @@ public class Cuenta {
         System.out.print("Ingrese fecha de creacion: ");
         fechaDeCreacion = cadena.nextLine(); // Esto no debe pedirse por parametro. Tiene que ser automatico
     }
-
     public void iniciarSesion(Usuario unUsuario) {
         this.solicitarEmailYContrasenia();
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("db");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         entityManager.getTransaction().begin();
-        Cuenta cuentaBuscada = (Cuenta) entityManager.createQuery("FROM Cuenta WHERE email = 'agus.desousa99@gmail.com' AND contrasenia = '123456789'").getSingleResult();
-        entityManager.getTransaction().commit();
 
-        /*
-        if(cuentaBuscada.getId_cuenta() != 0) {
-            Usuario usuarioBuscado = (Usuario) entityManager.createQuery("FROM Usuario WHERE id_cuenta = 1");
-            entityManager.getTransaction().commit();
-            System.out.println("Usuario encontrado");
-        } else
-            System.out.println("Usuario no encontrado");*/
+        try {
+            Cuenta cuentaBuscada = (Cuenta) entityManager.createQuery(
+                            "FROM Cuenta u WHERE u.email LIKE :variableEmail AND u.contrasenia LIKE :variablePassword ")
+                    .setParameter("variableEmail",email)
+                    .setParameter("variablePassword",contrasenia).getSingleResult();
+
+            System.out.println("Usuario <<" + cuentaBuscada.usuarioAsociado.getNombreUsuario() + ">> encontrado. Sesion iniciada");
+            unUsuario = cuentaBuscada.usuarioAsociado;
+            sesionIniciada = true;
+        } catch (Exception e) {
+            System.out.println("No existe el usuario");
+        }
 
         entityManager.close();
         entityManagerFactory.close();
@@ -70,19 +81,15 @@ public class Cuenta {
 
     public void registrarse(Usuario nuevoUsuario) {
         this.solicitarEmailYContrasenia();
-        int entrada;
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Id para cuenta: ");
-        entrada = scanner.nextInt();
-        this.idCuenta = entrada;
+
         nuevoUsuario.solicitarDatos();
         nuevoUsuario.setCuentaPersonal(this);
+        this.usuarioAsociado = nuevoUsuario;
 
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("db");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
 
         entityManager.getTransaction().begin();
-
         entityManager.persist(nuevoUsuario);
         entityManager.getTransaction().commit();
 

@@ -7,14 +7,18 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+
         // SpringApplication.run(Main.class, args);
 
         int opcion;
         Scanner opcionElegida = new Scanner(System.in);
-        Usuario usuario = new Usuario();
-        Cuenta cuenta = new Cuenta();
+        Usuario usuario;
+        Cuenta cuenta;
 
         do {
+            usuario = new Usuario();
+            cuenta = new Cuenta();
+
             System.out.println("1. Iniciar sesion");
             System.out.println("2. Registrarse");
 
@@ -26,7 +30,7 @@ public class Main {
             } else
                 cuenta.registrarse(usuario);
 
-        } while(opcion != 1);
+        } while(opcion != 1 || !cuenta.sesionIniciadaCorrectamente());
 
         System.out.println("Bienvenido al sistema para reserva de entradas para el cine. Por favor, elija una de las siguientes opciones: ");
 
