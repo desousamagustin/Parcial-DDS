@@ -1,27 +1,38 @@
-package model.Entrada;
+package model.Evento;
 
 import model.Descuento.DescuentoMenor;
 import model.Usuario.Usuario;
 
-import java.time.LocalDate;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "entrada")
 public class Entrada {
-
+    @Id
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @Column(name = "id_entrada")
+    private int idEntrada;
+    @OneToOne
+    @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-
+    @ManyToOne
     private Evento evento;
-
+    @Column
     private double precio;
+    @Column
+    private String fechaEvento;
+    @Transient
+    private double descuentoOtorgado;
+    @Transient
+    private DescuentoMenor descuento;
 
-    public Entrada() {
+    public DescuentoMenor getDescuento() {
+        return descuento;
     }
 
-    private LocalDate fechaEvento;
-
-    private double descuentoOtorgado;
-
-    //Ese descuento siempre se da entonces se empieza por el...
-    private DescuentoMenor descuento;
+    public void setDescuento(DescuentoMenor descuento) {
+        this.descuento = descuento;
+    }
     /*
     public Void verificarDescuento(){
         this.descuento.calcularDescuento(this,this.usuario,this.evento);
@@ -41,14 +52,6 @@ public class Entrada {
         this.descuentoOtorgado = descuentoOtorgado;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     public Evento getEvento() {
         return evento;
     }
@@ -66,14 +69,20 @@ public class Entrada {
         return precio;
     }
 
-    public LocalDate getFechaEvento() {
+    public String getFechaEvento() {
         return fechaEvento;
     }
 
-    public void setFechaEvento(LocalDate fechaEvento) {
+    public void setFechaEvento(String fechaEvento) {
         this.fechaEvento = fechaEvento;
     }
 
+    public boolean verificarDisponibilidad(Sala sala){
+        return sala.hayEspaciosDisponible();
+    }
 
-
+    public void asignarValores(Evento eventoElegido) {
+        this.precio = eventoElegido.getPrecio();
+        this.fechaEvento = eventoElegido.getFecha();
+    }
 }

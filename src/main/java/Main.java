@@ -9,22 +9,20 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
-        // SpringApplication.run(Main.class, args);
-
         int opcion;
         Scanner opcionElegida = new Scanner(System.in);
-        Usuario usuario; // Usuario utilizado durante la ejecucion del programa
-        Cuenta cuenta; // Cuenta utilizada durante la ejecucion del programa
-        Avatar humano = new Humano(0,"Default","Negro","Negro","Default"); // Avatar generico del cual se clonara
-        humano.crearAvatarDefault();
+        Usuario usuario;
+        Cuenta cuenta;
+
+        //Humano humano = new Humano(0,"Default","Negro","Negro","Default");
+        //humano.crearAvatarDefault();
 
         do {
             usuario = new Usuario();
             cuenta = new Cuenta();
 
-            System.out.println("1. Iniciar sesion"); // Funciona
-            System.out.println("2. Registrarse"); // Funciona
+            System.out.println("1. Iniciar sesion");
+            System.out.println("2. Registrarse");
 
             System.out.print("Opcion: ");
             opcion = opcionElegida.nextInt();
@@ -36,7 +34,7 @@ public class Main {
 
         } while(opcion != 1 || !cuenta.sesionIniciadaCorrectamente());
 
-        System.out.println("Bienvenido al sistema para reserva de entradas para el cine. Por favor, elija una de las siguientes opciones: ");
+        System.out.println("Bienvenido al sistema de reserva de entradas para el cine. Por favor, elija una de las siguientes opciones: ");
 
         do {
             System.out.println("0. Salir");
@@ -61,7 +59,7 @@ public class Main {
                     usuario.descuentosDisponibles();
                     break;
                 case 4:
-                    humano.generarAvatar(usuario); // En proceso
+                    //usuario.generarAvatar();
                     break;
                 case 5:
                     usuario.comprarProducto();

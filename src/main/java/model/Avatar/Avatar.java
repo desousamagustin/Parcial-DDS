@@ -1,15 +1,13 @@
 package model.Avatar;
 
-import model.Usuario.Usuario;
-
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class Avatar implements  Cloneable{
+public abstract class Avatar implements Cloneable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_avatar")
-    protected int id;
+    protected int idAvatar;
     @Column(name = "numero_camiseta")
     protected int numeroCamiseta;
     @Column(name = "apodo_camiseta")
@@ -54,11 +52,11 @@ public abstract class Avatar implements  Cloneable{
     }
 
     public int getId() {
-        return id;
+        return idAvatar;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idAvatar = id;
     }
 
     public String getColorPelo() {
@@ -80,8 +78,6 @@ public abstract class Avatar implements  Cloneable{
     public abstract void solicitarDatos();
 
     public abstract void crearAvatarDefault();
-    public abstract void generarAvatar(Usuario unUsuario);
-    //public abstract Avatar clonar();
 
     public Object clone(){
         Object clone= null;

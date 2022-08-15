@@ -1,10 +1,10 @@
 package model.Avatar;
 
+import model.Usuario.Cuenta;
 import model.Usuario.Usuario;
 
 import javax.persistence.*;
 import java.util.Scanner;
-
 @Entity
 @Table(name = "avatar")
 public class Humano extends Avatar {
@@ -31,6 +31,7 @@ public class Humano extends Avatar {
         cadena = cadenaIngresada.nextLine();
         this.setApodoCamiseta(cadena);
     }
+
     public void crearAvatarDefault() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("db");
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -42,29 +43,6 @@ public class Humano extends Avatar {
         entityManagerFactory.close();
         entityManager.close();
     }
-
-    public void generarAvatar(Usuario usuario) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("db");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-
-        Humano avatarGenerico = (Humano) entityManager.createQuery("FROM avatar WHERE id_avatar = '7' "); // Query que me traiga el primer elemento de la tabla
-        Humano nuevoAvatar = (Humano) avatarGenerico.clone();
-
-        nuevoAvatar.solicitarDatos();
-        usuario.setAvatar(nuevoAvatar);
-
-    }
-
-   // @Override
-    /*public Avatar clonar() {
-        return null;
-    }*/
-
-    //@Override
-    /*public Avatar clonar() {
-        // return objeto clonado
-    }*/
 
     public Humano(int numeroCamiseta, String apodoCamiseta, String colorPelo, String colorOjos, String camisetaSeleccion) {
         super(numeroCamiseta, apodoCamiseta, colorPelo, colorOjos, camisetaSeleccion);
@@ -102,11 +80,11 @@ public class Humano extends Avatar {
     }
 
     public int getId() {
-        return id;
+        return idAvatar;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idAvatar = id;
     }
 
     public String getColorPelo() {

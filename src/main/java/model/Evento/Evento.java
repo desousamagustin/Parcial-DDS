@@ -1,13 +1,25 @@
-package model.Entrada;
+package model.Evento;
 
-import org.springframework.core.SpringVersion;
+import javax.persistence.Column;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-import java.time.LocalDate;
-
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Evento {
+    @Column
     private int calificacion;
-
+    private Sala salaAsignada;
+    private String fecha;
     private double precio;
+
+
+    public Sala getSalaAsignada() {
+        return salaAsignada;
+    }
+
+    public void setSalaAsignada(Sala salaAsignada) {
+        this.salaAsignada = salaAsignada;
+    }
 
     public double getPrecio() {
         return precio;
@@ -32,6 +44,13 @@ public abstract class Evento {
 
     public void setCalificacion(int calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public boolean esInteresante(){

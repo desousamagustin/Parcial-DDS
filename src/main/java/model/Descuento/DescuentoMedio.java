@@ -1,7 +1,6 @@
 package model.Descuento;
 
-import model.Entrada.Entrada;
-import model.Entrada.Evento;
+import model.Evento.Entrada;
 import model.Usuario.Usuario;
 
 public class DescuentoMedio implements EstrategiaDescuento {
@@ -12,7 +11,7 @@ public class DescuentoMedio implements EstrategiaDescuento {
     public void calcularDescuento(Entrada entrada, Usuario usuario) {
         if(!usuario.esMayorDeEdad()){
              entrada.setDescuentoOtorgado(entrada.getPrecio() * 0.5);
-        }else{
+        } else{
             entrada.setDescuentoOtorgado(0);
         }
     }

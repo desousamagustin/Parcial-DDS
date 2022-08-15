@@ -1,10 +1,9 @@
-package model.Entrada;
+package model.Evento;
 
 import java.util.ArrayList;
 
 public class Reserva {
-    private int numeroReserva;
-
+    private int id_reserva;
     private int numeroOperacion;
 
     private boolean estaPaga;
@@ -18,18 +17,6 @@ public class Reserva {
             this.costoTotal = Double.sum(this.getCostoTotal(), entrada.costo());
         }
         return 0;
-    }
-
-    public boolean verificarDisponibilidad(Sala sala){
-        return sala.hayEspaciosDisponible();
-    }
-
-    public int getNumeroReserva() {
-        return numeroReserva;
-    }
-
-    public void setNumeroReserva(int numeroReserva) {
-        this.numeroReserva = numeroReserva;
     }
 
     public int getNumeroOperacion() {

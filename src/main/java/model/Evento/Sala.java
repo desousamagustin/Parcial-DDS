@@ -1,8 +1,8 @@
-package model.Entrada;
+package model.Evento;
 
 public class Sala {
 
-    private int id;
+    private int idSala;
 
     private Integer espacioTotal;
 
@@ -10,12 +10,12 @@ public class Sala {
 
     private Evento eventoAsignado;
 
-    public int getId() {
-        return id;
+    public int getidSala() {
+        return idSala;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setidSala(int id) {
+        this.idSala = idSala;
     }
 
     public Integer getEspacioTotal() {
@@ -44,5 +44,9 @@ public class Sala {
 
     public boolean hayEspaciosDisponible() {
         return this.getEspacioDisponible() > 0;
+    }
+
+    public void restarEspacioDisponible() {
+        this.espacioDisponible--;
     }
 }

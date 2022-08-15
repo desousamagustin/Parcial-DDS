@@ -1,16 +1,14 @@
-package model.Entrada;
+package model.Evento;
 
 import java.util.ArrayList;
 
 public class Pelicula extends Evento {
-    private int calificacion;
     private String productora;
     private ArrayList<Actor> elenco;
     private int minutosPelicula;
 
     public Pelicula(int calificacion, int calificacion1, String productora, ArrayList<Actor> elenco, int minutosPelicula, double precio) {
         super(calificacion,precio);
-        this.calificacion = calificacion1;
         this.productora = productora;
         this.elenco = elenco;
         this.minutosPelicula = minutosPelicula;
@@ -45,14 +43,6 @@ public class Pelicula extends Evento {
 
     public void setProductora(String productora) {
         this.productora = productora;
-    }
-
-    public int getCalificacion() {
-        return calificacion;
-    }
-
-    public void setCalificacion(int calificacion) {
-        this.calificacion = calificacion;
     }
 
     @Override

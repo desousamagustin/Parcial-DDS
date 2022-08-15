@@ -1,7 +1,6 @@
 package model.Descuento;
 
-import model.Entrada.Entrada;
-import model.Entrada.Evento;
+import model.Evento.Entrada;
 import model.Usuario.Usuario;
 
 public class DescuentoMenor implements EstrategiaDescuento {

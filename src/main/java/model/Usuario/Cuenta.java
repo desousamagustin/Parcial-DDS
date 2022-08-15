@@ -10,7 +10,7 @@ import java.util.Scanner;
 @Table(name = "cuenta")
 public class Cuenta {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCuenta;
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_usuario")

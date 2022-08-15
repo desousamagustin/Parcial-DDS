@@ -1,4 +1,4 @@
-package model.Entrada;
+package model.Evento;
 
 import java.util.ArrayList;
 

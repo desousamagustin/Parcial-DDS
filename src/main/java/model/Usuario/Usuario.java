@@ -1,6 +1,5 @@
 package model.Usuario;
 
-import model.Avatar.Avatar;
 import model.Avatar.Humano;
 import model.Combo.BaldePochoclo;
 import model.Combo.Bebida;
@@ -10,7 +9,7 @@ import model.Descuento.Descuento;
 import model.Descuento.DescuentoMayor;
 import model.Descuento.DescuentoMedio;
 import model.Descuento.DescuentoMenor;
-import model.Entrada.*;
+import model.Evento.*;
 import model.MetodoDePago.MetodoDePago;
 
 import javax.persistence.*;
@@ -21,7 +20,7 @@ import java.util.Scanner;
 @Table(name = "usuario")
 public class Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_usuario")
     private int idUsuario;
     @Column(name = "nombre_usuario")
@@ -40,12 +39,14 @@ public class Usuario {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_avatar")
     private Humano avatar;
-    @Transient
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_metodoDePago")
     private MetodoDePago metodoDePago;
-    @Transient
+    @OneToMany // ver como es
     private List <Producto> productos;
-    @Transient
-    private List <Reserva> reservas;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_reserva")
+    private Reserva reserva;
 
     public Humano getAvatar() {
         return avatar;
@@ -55,12 +56,12 @@ public class Usuario {
         this.avatar = avatar;
     }
 
-    public List<Reserva> getReservas() {
-        return reservas;
+    public Reserva getReserva() {
+        return reserva;
     }
 
-    public void setReservas(List<Reserva> reservas) {
-        this.reservas = reservas;
+    public void setReserva(Reserva reserva) {
+        this.reserva = reserva;
     }
 
     public MetodoDePago getMetodoDePago() {
@@ -212,6 +213,8 @@ public class Usuario {
         descuento.determinarDescuento(entrada,this);
     }
 
+    public void generarAvatar() { }
+
     public void comprarProducto() {
         int opcion;
         Scanner scanner = new Scanner(System.in);
@@ -238,10 +241,88 @@ public class Usuario {
     }
 
     public boolean esMayorDeEdad(){
-        return this.getEdad() >=18;
+        return this.getEdad() >= 18;
     }
 
     public void comprarEntradas() {
-        Entrada nuevaEntrada = new Entrada();
+        int opcion;
+        Entrada entrada = new Entrada();
+        Scanner scanner = new Scanner(System.in);
+        Evento eventoElegido = null;
+
+        System.out.println("Elija el evento: ");
+        System.out.print("0. Entrada para pelicula");
+        System.out.print("1. Entrada para partido de futbol");
+        opcion = scanner.nextInt();
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("db");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+
+        if(opcion == 1) {
+
+            System.out.println("Elija una opcion: ");
+            System.out.println("1. Argentina - Brasil ");
+            System.out.println("2. Argentina - Uruguay ");
+            System.out.println("3. Brasil - Alemania ");
+            System.out.println("4. Alemania - Francia ");
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    eventoElegido = (Partido) entityManager.createQuery("FROM partido WHERE id_partido = '1'");
+                    break;
+                case 2:
+                    eventoElegido = (Partido) entityManager.createQuery("FROM partido WHERE id_partido = '2'");
+                    break;
+                case 3:
+                    eventoElegido = (Partido) entityManager.createQuery("FROM partido WHERE id_partido = '3'");
+                    break;
+                case 4:
+                    eventoElegido = (Partido) entityManager.createQuery("FROM partido WHERE id_partido = '4'");
+                    break;
+                default:
+                    break;
+            }
+        } else if(opcion == 0) {
+            System.out.println("1. Spiderman");
+            System.out.println("2. Spiderman 2");
+            System.out.println("3. Spiderman 3");
+            opcion = scanner.nextInt();
+
+            switch (opcion) {
+                case 1:
+                    eventoElegido = (Pelicula) entityManager.createQuery("FROM pelicula WHERE id_pelicula = '1'");
+
+                    break;
+                case 2:
+                    eventoElegido = (Pelicula) entityManager.createQuery("FROM pelicula WHERE id_pelicula = '2'");
+                    break;
+                case 3:
+                    eventoElegido = (Pelicula) entityManager.createQuery("FROM pelicula WHERE id_pelicula = '3'");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        entrada.setEvento(eventoElegido);
+        entrada.asignarValores(eventoElegido);
+
+        int salaEvento = eventoElegido.getSalaAsignada().getidSala();
+
+        Sala sala = (Sala) entityManager.createQuery("FROM sala u WHERE u.id_sala LIKE :salaAsignada")
+                        .setParameter("salaAsignada",salaEvento)
+                                .getSingleResult();
+
+        if(sala.hayEspaciosDisponible()) {
+            entityManager.persist(entrada);
+            sala.restarEspacioDisponible();
+        } else {
+            System.out.println("No hay lugar"); // esto se borra
+        }
+
+        entityManager.close();
+        entityManagerFactory.close();
     }
 }
