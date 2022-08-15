@@ -3,6 +3,7 @@ package model.Usuario;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 @Entity
@@ -19,7 +20,7 @@ public class Cuenta {
     @Column(name = "password")
     private String contrasenia;
     @Column(name = "fecha_de_creacion")
-    private String fechaDeCreacion;
+    private LocalDate fechaDeCreacion;
     @Transient
     private Boolean sesionIniciada = false;
 
@@ -30,14 +31,6 @@ public class Cuenta {
 
     public void setId_cuenta(int id_cuenta) {
         this.idCuenta = id_cuenta;
-    }
-
-    public String getFechaDeCreacion() {
-        return fechaDeCreacion;
-    }
-
-    public void setFechaDeCreacion(String fechaDeCreacion) {
-        this.fechaDeCreacion = fechaDeCreacion;
     }
 
     public Boolean sesionIniciadaCorrectamente() {
@@ -52,8 +45,7 @@ public class Cuenta {
         email = cadena.nextLine();
         System.out.print("Ingrese su contrasenia: ");
         contrasenia = cadena.nextLine();
-        System.out.print("Ingrese fecha de creacion: ");
-        fechaDeCreacion = cadena.nextLine(); // Esto no debe pedirse por parametro. Tiene que ser automatico
+        fechaDeCreacion = LocalDate.now();
     }
     public void iniciarSesion(Usuario unUsuario) {
         this.solicitarEmailYContrasenia();
