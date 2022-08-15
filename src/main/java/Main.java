@@ -1,3 +1,5 @@
+import model.Avatar.Avatar;
+import model.Avatar.Humano;
 import model.Usuario.Cuenta;
 import model.Usuario.Usuario;
 import model.apiCotizacion.Cotizacion;
@@ -12,15 +14,17 @@ public class Main {
 
         int opcion;
         Scanner opcionElegida = new Scanner(System.in);
-        Usuario usuario;
-        Cuenta cuenta;
+        Usuario usuario; // Usuario utilizado durante la ejecucion del programa
+        Cuenta cuenta; // Cuenta utilizada durante la ejecucion del programa
+        Avatar humano = new Humano(0,"Default","Negro","Negro","Default"); // Avatar generico del cual se clonara
+        humano.crearAvatarDefault();
 
         do {
             usuario = new Usuario();
             cuenta = new Cuenta();
 
-            System.out.println("1. Iniciar sesion");
-            System.out.println("2. Registrarse");
+            System.out.println("1. Iniciar sesion"); // Funciona
+            System.out.println("2. Registrarse"); // Funciona
 
             System.out.print("Opcion: ");
             opcion = opcionElegida.nextInt();
@@ -57,7 +61,7 @@ public class Main {
                     usuario.descuentosDisponibles();
                     break;
                 case 4:
-                    usuario.generarAvatar();
+                    humano.generarAvatar(usuario); // En proceso
                     break;
                 case 5:
                     usuario.comprarProducto();

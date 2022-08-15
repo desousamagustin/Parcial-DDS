@@ -1,7 +1,7 @@
 package model.Usuario;
 
+import model.Avatar.Avatar;
 import model.Avatar.Humano;
-import model.Avatar.PrototypeAvatar;
 import model.Combo.BaldePochoclo;
 import model.Combo.Bebida;
 import model.Combo.Combo;
@@ -26,7 +26,6 @@ public class Usuario {
     private int idUsuario;
     @Column(name = "nombre_usuario")
     private String nombreUsuario;
-
     @Column
     private String nombre;
     @Column
@@ -38,14 +37,47 @@ public class Usuario {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_cuenta")
     private Cuenta cuentaAsociada;
-    @Transient
-    private PrototypeAvatar avatar;
-    @Transient
-    private List <Reserva> reservas;
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_avatar")
+    private Humano avatar;
     @Transient
     private MetodoDePago metodoDePago;
     @Transient
     private List <Producto> productos;
+    @Transient
+    private List <Reserva> reservas;
+
+    public Humano getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Humano avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(List<Reserva> reservas) {
+        this.reservas = reservas;
+    }
+
+    public MetodoDePago getMetodoDePago() {
+        return metodoDePago;
+    }
+
+    public void setMetodoDePago(MetodoDePago metodoDePago) {
+        this.metodoDePago = metodoDePago;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
 
     // Getters y Setters
     public int getId_usuario() {
@@ -179,8 +211,6 @@ public class Usuario {
         descuento.setEstrategia(new DescuentoMayor());
         descuento.determinarDescuento(entrada,this);
     }
-
-    public void generarAvatar() { }
 
     public void comprarProducto() {
         int opcion;

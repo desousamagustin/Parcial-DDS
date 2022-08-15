@@ -2,15 +2,32 @@ package model.Avatar;
 
 import model.Usuario.Usuario;
 
-import java.util.Scanner;
+import javax.persistence.*;
 
-public abstract class PrototypeAvatar {
-    protected int numeroCamiseta;
-    protected String apodoCamiseta;
+@MappedSuperclass
+public abstract class Avatar {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_avatar")
     protected int id;
+    @Column(name = "numero_camiseta")
+    protected int numeroCamiseta;
+    @Column(name = "apodo_camiseta")
+    protected String apodoCamiseta;
+    @Column(name = "color_pelo")
     protected String ColorPelo;
+    @Column(name = "color_ojos")
     protected String colorOjos;
+    @Column(name = "camiseta_seleccion")
     protected String camisetaSeleccion;
+
+    public Avatar(int numeroCamiseta, String apodoCamiseta, String colorPelo, String colorOjos, String camisetaSeleccion) {
+        this.numeroCamiseta = numeroCamiseta;
+        this.apodoCamiseta = apodoCamiseta;
+        ColorPelo = colorPelo;
+        this.colorOjos = colorOjos;
+        this.camisetaSeleccion = camisetaSeleccion;
+    }
 
     public String getCamisetaSeleccion() {
         return camisetaSeleccion;
@@ -61,4 +78,8 @@ public abstract class PrototypeAvatar {
     }
 
     public abstract void solicitarDatos();
+
+    public abstract void crearAvatarDefault();
+    public abstract void generarAvatar(Usuario unUsuario);
+    public abstract Avatar clonar();
 }
