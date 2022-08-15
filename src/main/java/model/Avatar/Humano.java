@@ -49,17 +49,22 @@ public class Humano extends Avatar {
         entityManager.getTransaction().begin();
 
         Humano avatarGenerico = (Humano) entityManager.createQuery("FROM avatar WHERE id_avatar = '7' "); // Query que me traiga el primer elemento de la tabla
-        Humano nuevoAvatar = avatarGenerico.clonar();
+        Humano nuevoAvatar = (Humano) avatarGenerico.clone();
 
         nuevoAvatar.solicitarDatos();
         usuario.setAvatar(nuevoAvatar);
 
     }
 
-    @Override
-    public Avatar clonar() {
+   // @Override
+    /*public Avatar clonar() {
+        return null;
+    }*/
+
+    //@Override
+    /*public Avatar clonar() {
         // return objeto clonado
-    }
+    }*/
 
     public Humano(int numeroCamiseta, String apodoCamiseta, String colorPelo, String colorOjos, String camisetaSeleccion) {
         super(numeroCamiseta, apodoCamiseta, colorPelo, colorOjos, camisetaSeleccion);

@@ -5,7 +5,7 @@ import model.Usuario.Usuario;
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class Avatar {
+public abstract class Avatar implements  Cloneable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_avatar")
@@ -81,5 +81,17 @@ public abstract class Avatar {
 
     public abstract void crearAvatarDefault();
     public abstract void generarAvatar(Usuario unUsuario);
-    public abstract Avatar clonar();
+    //public abstract Avatar clonar();
+
+    public Object clone(){
+        Object clone= null;
+      try{
+          clone=super.clone();
+
+      }catch(CloneNotSupportedException e){
+          e.printStackTrace();
+      }
+
+      return clone;
+    }
 }
