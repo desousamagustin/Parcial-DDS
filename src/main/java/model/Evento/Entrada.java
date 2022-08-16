@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "entrada")
 public class Entrada {
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_entrada")
     private int idEntrada;
     @OneToOne
@@ -26,6 +26,28 @@ public class Entrada {
     @Transient
     private DescuentoMenor descuento;
 
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_reserva",referencedColumnName = "id_reserva")
+    private Reserva reserva;
+
+    @OneToOne
+    @JoinColumn(name = "id_sala")
+    private Sala sala;
+
+    public Entrada() {
+    }
+
+    public Entrada(int idEntrada, Usuario usuario, Evento evento, double precio, String fechaEvento, double descuentoOtorgado, DescuentoMenor descuento, Sala sala) {
+        this.idEntrada = idEntrada;
+        this.usuario = usuario;
+        this.evento = evento;
+        this.precio = precio;
+        this.fechaEvento = fechaEvento;
+        this.descuentoOtorgado = descuentoOtorgado;
+        this.descuento = descuento;
+        this.sala = sala;
+    }
+
     public DescuentoMenor getDescuento() {
         return descuento;
     }
@@ -33,11 +55,6 @@ public class Entrada {
     public void setDescuento(DescuentoMenor descuento) {
         this.descuento = descuento;
     }
-    /*
-    public Void verificarDescuento(){
-        this.descuento.calcularDescuento(this,this.usuario,this.evento);
-        return null;
-    }*/
 
     //Aca cuando vengo de consultar por mi descuento, agarro mi descuento calculado y hago el costo real de la entrada
     public double costo() {
@@ -77,7 +94,7 @@ public class Entrada {
         this.fechaEvento = fechaEvento;
     }
 
-    public boolean verificarDisponibilidad(Sala sala){
+    public boolean verificarDisponibilidad(){
         return sala.hayEspaciosDisponible();
     }
 

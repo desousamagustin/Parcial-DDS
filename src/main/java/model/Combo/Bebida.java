@@ -1,6 +1,13 @@
 package model.Combo;
 
+
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue(value="bebida")
 public class Bebida extends Producto {
+
+    @Column(name = "nombre_comercial")
     private String nombreComercial;
 
     @Override

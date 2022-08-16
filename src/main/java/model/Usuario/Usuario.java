@@ -11,6 +11,7 @@ import model.Descuento.DescuentoMedio;
 import model.Descuento.DescuentoMenor;
 import model.Evento.*;
 import model.MetodoDePago.MetodoDePago;
+import model.MetodoDePago.TarjetaDeDebito;
 
 import javax.persistence.*;
 import java.util.List;
@@ -41,14 +42,16 @@ public class Usuario {
     private Humano avatar;
     //@OneToOne(cascade = {CascadeType.ALL})
     //@JoinColumn(name = "id_metodoDePago")
-    @Transient
-    private MetodoDePago metodoDePago;
-    //@OneToMany // ver como es
-    @Transient
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_tarjeta_de_debito")
+    private TarjetaDeDebito tarjetDeDebito;
+
+    @OneToMany(mappedBy = "usuario")
     private List <Producto> productos;
    // @OneToOne(cascade = {CascadeType.ALL})
     //@JoinColumn(name = "id_reserva")
-    @Transient
+    @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "id_reserva")
     private Reserva reserva;
 
     public Humano getAvatar() {
@@ -65,14 +68,6 @@ public class Usuario {
 
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
-    }
-
-    public MetodoDePago getMetodoDePago() {
-        return metodoDePago;
-    }
-
-    public void setMetodoDePago(MetodoDePago metodoDePago) {
-        this.metodoDePago = metodoDePago;
     }
 
     public List<Producto> getProductos() {

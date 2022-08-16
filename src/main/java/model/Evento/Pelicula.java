@@ -14,7 +14,7 @@ public class Pelicula extends Evento {
     @Column
     private String productora;
 
-    @OneToMany(mappedBy = "pelicula")
+    @OneToMany
     private List<Actor> elenco;
 
     @Column
@@ -46,7 +46,7 @@ public class Pelicula extends Evento {
 
     @Override
     public boolean criterioEsInteresante() {
-        return this.productoraEsFamosa() || (tieneActoreEstrella() && this.tieneMuchosMinutos()) ;
+        return this.productoraEsFamosa() || (this.tieneActoreEstrella() && this.tieneMuchosMinutos()) ;
     }
 
     public boolean productoraEsFamosa(){
@@ -58,9 +58,8 @@ public class Pelicula extends Evento {
     }
 
     public boolean tieneActoreEstrella(){
-        for(int x=0; x<elenco.size();x++){
-            Actor actor = elenco.get(x);
-            if(actor.getNombre().contains("Dwayne Johnson") || actor.getNombre().contains("Vin Diesel")){
+        for (Actor actor : elenco) {
+            if (actor.getNombre().contains("Dwayne Johnson") || actor.getNombre().contains("Vin Diesel")) {
                 return true;
             }
         }

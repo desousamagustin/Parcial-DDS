@@ -1,13 +1,24 @@
 package model.Evento;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "sala")
 public class Sala {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_sala")
     private int idSala;
 
+    @Column
     private Integer espacioTotal;
 
+    @Column
     private Integer espacioDisponible=100;
 
+    @OneToOne
+    @JoinColumn(name = "id_evento")
     private Evento eventoAsignado;
 
     public int getidSala() {

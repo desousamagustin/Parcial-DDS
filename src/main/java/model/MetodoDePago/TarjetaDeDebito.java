@@ -1,12 +1,23 @@
 package model.MetodoDePago;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "tarjeta_de_debito")
 public class TarjetaDeDebito implements MetodoDePago{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id_tarjeta_de_debito")
+    private int idTarjetaDeDebito;
+    @Column(name="numero_de_tarjeta")
     private Integer numeroTarjeta;
 
+    @Column(name = "titular_tarjeta")
     private String titular;
 
-    private float dineroDisponible;
+    @Column(name = "dinero_disponible")
+    private double dineroDisponible;
 
     public String getTitular() {
         return titular;
@@ -16,7 +27,7 @@ public class TarjetaDeDebito implements MetodoDePago{
         this.titular = titular;
     }
 
-    public float getDineroDisponible() {
+    public double getDineroDisponible() {
         return dineroDisponible;
     }
 

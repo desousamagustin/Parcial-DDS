@@ -21,7 +21,8 @@ public abstract class Evento{
     @Column
     private int calificacion;
 
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "id_sala")
     private Sala salaAsignada;
     @Column
     private String fecha;

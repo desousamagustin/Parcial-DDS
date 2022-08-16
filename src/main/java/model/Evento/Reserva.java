@@ -1,15 +1,28 @@
 package model.Evento;
 
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "reserva")
 public class Reserva {
-    private int id_reserva;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_reserva")
+    private int idReserva;
+
+    @OneToMany(mappedBy = "reserva")
+    private List<Entrada> entradas;
+
+    @Column(name = "numero_operacion")
     private int numeroOperacion;
 
+    @Column(name = "esta_paga")
     private boolean estaPaga;
 
-    private ArrayList<Entrada> entradas;
-
+    @Column(name = "costo_total")
     private double costoTotal;
 
     public float calcularCostoTotal(){
@@ -35,11 +48,11 @@ public class Reserva {
         this.estaPaga = estaPaga;
     }
 
-    public ArrayList<Entrada> getEntrada() {
+    public List<Entrada> getEntrada() {
         return entradas;
     }
 
-    public void setEntrada(ArrayList<Entrada> entrada) {
+    public void setEntrada(List<Entrada> entrada) {
         this.entradas = entrada;
     }
 
