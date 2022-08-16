@@ -1,5 +1,7 @@
 package model.Combo;
 
+import model.Usuario.Usuario;
+
 public abstract class Producto {
     protected String tamanio;
     protected Float precio;

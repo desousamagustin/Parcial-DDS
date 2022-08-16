@@ -1,15 +1,25 @@
 package model.Evento;
 
-import javax.persistence.Column;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "eventos")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Evento {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_evento")
+    private Integer id_evento;
+
     @Column
     private int calificacion;
+
+    @Transient
     private Sala salaAsignada;
+    @Column
     private String fecha;
+    @Column
     private double precio;
 
 
