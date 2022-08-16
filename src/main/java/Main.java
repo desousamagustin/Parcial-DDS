@@ -1,14 +1,12 @@
-import model.Avatar.Avatar;
-import model.Avatar.Humano;
 import model.Usuario.Cuenta;
 import model.Usuario.Usuario;
-import model.apiCotizacion.Cotizacion;
 
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        InterfazDeUsuario interfaz = new InterfazDeUsuario();
         int opcion;
         Scanner opcionElegida = new Scanner(System.in);
         Usuario usuario;
@@ -28,9 +26,9 @@ public class Main {
             opcion = opcionElegida.nextInt();
 
             if(opcion == 1) {
-                cuenta.iniciarSesion(usuario);
+                interfaz.iniciarSesion(usuario,cuenta);
             } else
-                cuenta.registrarse(usuario);
+                interfaz.registrarse(usuario,cuenta);
 
         } while(opcion != 1 || !cuenta.sesionIniciadaCorrectamente());
 
@@ -50,24 +48,22 @@ public class Main {
 
             switch (opcion) {
                 case 1:
-                    usuario.comprarEntradas();
+                    interfaz.comprarEntradas(usuario);
                     break;
                 case 2:
-                    usuario.buscarEvento();
+                    interfaz.buscarEvento(usuario);
                     break;
                 case 3:
-                    usuario.descuentosDisponibles();
+                    interfaz.verDescuentosDisponibles(usuario);
                     break;
                 case 4:
-                    //usuario.generarAvatar();
+                    interfaz.generarAvatarPersonalizado(usuario);
                     break;
                 case 5:
-                    usuario.comprarProducto();
+                    interfaz.comprarProducto(usuario);
                     break;
                 case 6:
-                    Cotizacion cotizacion = new Cotizacion();
-                    String resultado = cotizacion.obtenerCotizacion().toString();
-                    System.out.println(resultado);
+                    interfaz.consultarCotizacionDolar();
                 default:
                     break;
             }

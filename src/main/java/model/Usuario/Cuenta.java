@@ -25,20 +25,39 @@ public class Cuenta {
     private Boolean sesionIniciada = false;
 
 
+    public void setSesionIniciada(Boolean nuevaSesion) {
+        this.sesionIniciada = nuevaSesion;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getContrasenia() {
+        return contrasenia;
+    }
+    public Usuario getUsuarioAsociado() {
+        return usuarioAsociado;
+    }
+    public void setUsuarioAsociado(Usuario usuario) {
+        this.usuarioAsociado = usuario;
+    }
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
     public int getId_cuenta() {
         return idCuenta;
     }
-
     public void setId_cuenta(int id_cuenta) {
         this.idCuenta = id_cuenta;
     }
-
     public Boolean sesionIniciadaCorrectamente() {
         return sesionIniciada;
     }
 
 
-    private void solicitarEmailYContrasenia() {
+    public void solicitarEmailYContrasenia() {
         Scanner cadena = new Scanner(System.in);
 
         System.out.print("Ingrese su e-mail: ");
@@ -47,6 +66,7 @@ public class Cuenta {
         contrasenia = cadena.nextLine();
         fechaDeCreacion = LocalDate.now();
     }
+
     public void iniciarSesion(Usuario unUsuario) {
         this.solicitarEmailYContrasenia();
 
@@ -70,6 +90,7 @@ public class Cuenta {
         entityManager.close();
         entityManagerFactory.close();
     }
+
 
     public void registrarse(Usuario nuevoUsuario) {
         this.solicitarEmailYContrasenia();
