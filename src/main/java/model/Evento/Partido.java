@@ -1,23 +1,29 @@
 package model.Evento;
 
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
+import java.util.List;
 
-//@Entity
-//@PrimaryKeyJoinColumn(referencedColumnName = "id_partido")
+@Entity
+@Table(name = "partido")
 public class Partido extends Evento {
 
-    private final Seleccion seleccionUno;
-    private final Seleccion seleccionDos;
+    @ManyToMany
+    @JoinTable(name="equipo_partido")
+    private List<Seleccion> equipos;
 
-    public Partido(int calificacion, double precio, Seleccion seleccionUno, Seleccion seleccionDos) {
-        super(calificacion, precio);
-        this.seleccionUno = seleccionUno;
-        this.seleccionDos = seleccionDos;
+    public Partido(Integer id_evento, Partido partido, int calificacion, Sala salaAsignada, String fecha, double precio, TipoEvento tipoDeEvento, List<Seleccion> equipos) {
+        super(id_evento, partido, calificacion, salaAsignada, fecha, precio, tipoDeEvento);
+        this.equipos = equipos;
     }
 
     @Override
     public boolean criterioEsInteresante() {
-        return (seleccionUno.contieneJugadorEstrella() || seleccionUno.esMuyCampeon() || seleccionDos.contieneJugadorEstrella() || seleccionDos.esMuyCampeon());
+
+        for (Seleccion seleccion: equipos) {
+            if(seleccion.contieneJugadorEstrella() || seleccion.esMuyCampeon()){
+                return true;
+            }
+        }
+        return false;
     }
 }

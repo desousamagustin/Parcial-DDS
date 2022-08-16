@@ -39,13 +39,16 @@ public class Usuario {
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "id_avatar")
     private Humano avatar;
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "id_metodoDePago")
+    //@OneToOne(cascade = {CascadeType.ALL})
+    //@JoinColumn(name = "id_metodoDePago")
+    @Transient
     private MetodoDePago metodoDePago;
-    @OneToMany // ver como es
+    //@OneToMany // ver como es
+    @Transient
     private List <Producto> productos;
-    @OneToOne(cascade = {CascadeType.ALL})
-    @JoinColumn(name = "id_reserva")
+   // @OneToOne(cascade = {CascadeType.ALL})
+    //@JoinColumn(name = "id_reserva")
+    @Transient
     private Reserva reserva;
 
     public Humano getAvatar() {

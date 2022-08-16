@@ -3,14 +3,20 @@ package model.Evento;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "eventos")
+@Table(name = "evento")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Evento {
+public abstract class Evento{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_evento")
     private Integer id_evento;
+
+    @Transient
+    private Pelicula pelicula;
+
+    @Transient
+    private Partido partido;
 
     @Column
     private int calificacion;
@@ -22,9 +28,34 @@ public abstract class Evento {
     @Column
     private double precio;
 
+    @Enumerated(EnumType.STRING)
+    private TipoEvento tipoDeEvento;
+
+    public Evento(Integer id_evento, Pelicula pelicula, int calificacion, Sala salaAsignada, String fecha, double precio, TipoEvento tipoDeEvento) {
+        this.id_evento = id_evento;
+        this.pelicula = pelicula;
+        this.calificacion = calificacion;
+        this.salaAsignada = salaAsignada;
+        this.fecha = fecha;
+        this.precio = precio;
+        this.tipoDeEvento = tipoDeEvento;
+    }
+
+    public Evento(Integer id_evento, Partido partido, int calificacion, Sala salaAsignada, String fecha, double precio, TipoEvento tipoDeEvento) {
+        this.id_evento = id_evento;
+        this.partido = partido;
+        this.calificacion = calificacion;
+        this.salaAsignada = salaAsignada;
+        this.fecha = fecha;
+        this.precio = precio;
+        this.tipoDeEvento = tipoDeEvento;
+    }
 
     public Sala getSalaAsignada() {
         return salaAsignada;
+    }
+
+    public Evento() {
     }
 
     public void setSalaAsignada(Sala salaAsignada) {
@@ -67,5 +98,7 @@ public abstract class Evento {
         return this.getCalificacion() >=8 && criterioEsInteresante();
     }
 
+
     public abstract boolean criterioEsInteresante();
+
 }

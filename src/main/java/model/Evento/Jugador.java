@@ -1,9 +1,17 @@
 package model.Evento;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "jugador")
 public class Jugador {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_jugador")
     private int id;
 
+    @Column
     private String nombre;
 
     public int getId() {

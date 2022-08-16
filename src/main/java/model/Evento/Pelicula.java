@@ -1,35 +1,24 @@
 package model.Evento;
 
+import com.sun.javafx.beans.IDProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Entity(name = "peliculas")
-@PrimaryKeyJoinColumn(referencedColumnName = "id_pelicula")
+@Entity
+@Table(name = "pelicula")
 public class Pelicula extends Evento {
 
     @Column
     private String productora;
+
     @OneToMany(mappedBy = "pelicula")
     private List<Actor> elenco;
 
     @Column
     private int minutosPelicula;
-
-    public Pelicula(int calificacion, int calificacion1, String productora, List<Actor> elenco, int minutosPelicula, double precio) {
-        super(calificacion,precio);
-        this.productora = productora;
-        this.elenco = elenco;
-        this.minutosPelicula = minutosPelicula;
-    }
-
-    public Pelicula(int calificacion, String productora, List<Actor> elenco, int minutosPelicula) {
-        super(calificacion);
-        this.productora = productora;
-        this.elenco = elenco;
-        this.minutosPelicula = minutosPelicula;
-    }
 
     public int getMinutosPelicula() {
         return minutosPelicula;
@@ -76,5 +65,12 @@ public class Pelicula extends Evento {
             }
         }
         return false;
+    }
+
+    public Pelicula(Integer id_evento, Pelicula pelicula, int calificacion, Sala salaAsignada, String fecha, double precio, TipoEvento tipoDeEvento, String productora, List<Actor> elenco, int minutosPelicula) {
+        super(id_evento, pelicula, calificacion, salaAsignada, fecha, precio, tipoDeEvento);
+        this.productora = productora;
+        this.elenco = elenco;
+        this.minutosPelicula = minutosPelicula;
     }
 }

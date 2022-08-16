@@ -8,14 +8,15 @@ public class Actor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
     @Column
     private String nombre;
 
     @ManyToOne
-    @JoinColumn(name = "id_pelicula")
-    Pelicula pelicula;
+    @JoinColumn(name = "id_evento")
+    private Pelicula pelicula;
 
     public Actor(int id, String nombre) {
         this.id = id;
