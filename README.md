@@ -1,4 +1,4 @@
-# Parcial-DDS
+# Parcial-DDS (por favor, ir a la rama Master)
 # 2022 - Asignatura Diseño de Sistemas - Curso K3002
 
 Alumnos:
