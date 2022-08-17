@@ -14,8 +14,8 @@ public class Main {
         Usuario usuario;
         Cuenta cuenta;
 
-        //Humano humano = new Humano(0,"Default","Negro","Negro","Default");
-        //humano.crearAvatarDefault();
+        Humano humano = new Humano(0,"Default","Negro","Negro","Default");
+        humano.crearAvatarDefault();
 
         do {
             usuario = new Usuario();
@@ -59,7 +59,7 @@ public class Main {
                     usuario.descuentosDisponibles();
                     break;
                 case 4:
-                    //usuario.generarAvatar();
+                    usuario.generarAvatar();
                     break;
                 case 5:
                     usuario.comprarProducto();
